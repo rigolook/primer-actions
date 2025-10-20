@@ -7,6 +7,12 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  workflow_dispatch:
+    inputs:
+      mensaje:
+        description: 'Mensaje personalizado'
+        required: true
+        default: '¡Hola DevOps!'
 
 # Jobs que se ejecutarán
 jobs:
@@ -14,17 +20,36 @@ jobs:
   saludar:
     # Runner donde se ejecutará (máquina virtual con Ubuntu)
     runs-on: ubuntu-latest
-    
+
     # Pasos que se ejecutarán en orden
     steps:
       # Paso 1: Hacer checkout del código
       - name: Checkout del repositorio
         uses: actions/checkout@v4
-      
+
       # Paso 2: Ejecutar comando de shell
-      - name: Imprimir mensaje de bienvenida
+      - name: Primer mensaje
+        run: echo "🚀 Iniciando el workflow"
+
+      - name: Mensaje principal
         run: echo "¡Hola DevOps!"
-      
+
+      - name: Mensaje de despedida
+        run: echo "✅ Workflow completado exitosamente"
+
+      # Opción 1: Variables de entorno
+      - name: Imprimir mensaje personalizado
+        env:
+          MENSAJE: "¡Hola DevOps!"
+          AUTOR: "Tu Nombre"
+        run: |
+          echo "$MENSAJE"
+          echo "Creado por: $AUTOR"
+
+      # Opción 2: Input del usuario
+      - name: Mensaje desde input
+        run: echo "Mensaje ingresado: ${{ github.event.inputs.mensaje }}"
+
       # Paso 3: Mostrar información del sistema
       - name: Mostrar información del sistema
         run: |
@@ -33,3 +58,28 @@ jobs:
           echo "Directorio actual: $(pwd)"
           echo "Fecha y hora: $(date)"
           echo "Versión de Ubuntu: $(lsb_release -d)"
+
+      # 🧩 Nivel 1: Añadir Emojis
+      - name: Mensaje con emojis
+        run: |
+          echo "👋 ¡Hola DevOps!"
+          echo "🎉 Este es tu primer workflow"
+          echo "🚀 Sigue aprendiendo GitHub Actions"
+
+      # 📝 Nivel 2: Crear un Archivo
+      - name: Crear archivo de saludo
+        run: |
+          echo "¡Hola DevOps!" > saludo.txt
+          echo "Archivo creado exitosamente"
+
+      - name: Mostrar contenido del archivo
+        run: cat saludo.txt
+
+      # ⚡ Nivel 3: Condicionales
+      - name: Mensaje condicional
+        run: |
+          if [ "${{ github.event_name }}" == "push" ]; then
+            echo "📝 Ejecutado por push a ${{ github.ref }}"
+          elif [ "${{ github.event_name }}" == "pull_request" ]; then
+            echo "🔍 Ejecutado por pull request"
+          fi
