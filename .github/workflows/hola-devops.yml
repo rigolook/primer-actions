@@ -61,23 +61,23 @@ jobs:
           echo "Fecha y hora: $(date)"
           echo "Versión de Ubuntu: $(lsb_release -d)"
 
-      # 🧩 Nivel 1: Añadir Emojis
+      # Nivel 1: Añadir Emojis
       - name: Mensaje con emojis
         run: |
           echo "👋 ¡Hola DevOps!"
           echo "🎉 Este es tu primer workflow"
           echo "🚀 Sigue aprendiendo GitHub Actions"
 
-      # 📝 Nivel 2: Crear un Archivo
+      # Nivel 2: Crear un Archivo
       - name: Crear archivo de saludo
         run: |
-          echo "¡Hola DevOps!" > saludo.txt
-          echo "Archivo creado exitosamente"
+          echo '¡Hola DevOps!' > saludo.txt
+          echo 'Archivo creado exitosamente'
 
       - name: Mostrar contenido del archivo
         run: cat saludo.txt
 
-      # ⚡ Nivel 3: Condicionales
+      # Nivel 3: Condicionales
       - name: Mensaje condicional
         run: |
           if [ "${{ github.event_name }}" == "push" ]; then
