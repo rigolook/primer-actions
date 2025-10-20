@@ -1,0 +1,35 @@
+# Nombre del workflow que aparecerá en la interfaz de GitHub
+name: Hola DevOps
+
+# Evento que activa el workflow
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+# Jobs que se ejecutarán
+jobs:
+  # Nombre del job
+  saludar:
+    # Runner donde se ejecutará (máquina virtual con Ubuntu)
+    runs-on: ubuntu-latest
+    
+    # Pasos que se ejecutarán en orden
+    steps:
+      # Paso 1: Hacer checkout del código
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+      
+      # Paso 2: Ejecutar comando de shell
+      - name: Imprimir mensaje de bienvenida
+        run: echo "¡Hola DevOps!"
+      
+      # Paso 3: Mostrar información del sistema
+      - name: Mostrar información del sistema
+        run: |
+          echo "=== Información del Sistema ==="
+          echo "Usuario: $(whoami)"
+          echo "Directorio actual: $(pwd)"
+          echo "Fecha y hora: $(date)"
+          echo "Versión de Ubuntu: $(lsb_release -d)"
