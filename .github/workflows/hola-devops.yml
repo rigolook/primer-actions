@@ -72,11 +72,16 @@ jobs:
       - name: Mostrar contenido del archivo
         run: cat saludo.txt
 
-      # Nivel 3: Condicionales
+      # Nivel 3: Condicionales (corregido)
       - name: Mensaje condicional
         run: |
-          if [ "${{ github.event_name }}" == "push" ]; then
-            echo "📝 Ejecutado por push a ${{ github.ref }}"
-          elif [ "${{ github.event_name }}" == "pull_request" ]; then
+          EVENT_NAME="${{ github.event_name }}"
+          REF="${{ github.ref }}"
+
+          if [ "$EVENT_NAME" == "push" ]; then
+            echo "📝 Ejecutado por push a $REF"
+          elif [ "$EVENT_NAME" == "pull_request" ]; then
             echo "🔍 Ejecutado por pull request"
+          else
+            echo "⚡ Ejecutado manualmente u otro evento"
           fi
