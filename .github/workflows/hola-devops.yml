@@ -43,9 +43,12 @@ jobs:
           echo "$MENSAJE"
           echo "Creado por: $AUTOR"
 
-      # Opción 2: Input del usuario
+      # Opción 2: Input del usuario (corregido: pasamos el input por env)
       - name: Mensaje desde input
-        run: echo "Mensaje ingresado: ${{ github.event.inputs.mensaje }}"
+        env:
+          INPUT_MENSAJE: ${{ github.event.inputs.mensaje }}
+        run: |
+          echo "Mensaje ingresado: $INPUT_MENSAJE"
 
       # Paso 3: Mostrar información del sistema
       - name: Mostrar información del sistema
