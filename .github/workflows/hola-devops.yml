@@ -1,15 +1,13 @@
 # Nombre del workflow que aparecerá en la interfaz de GitHub
 name: Hola DevOps
 
-
-
-# Evento que activa el workflow 1
+# Evento que activa el workflow
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-  workflow_dispatch:
+  workflow_dispatch:  # Permite ejecución manual
     inputs:
       mensaje:
         description: 'Mensaje personalizado'
@@ -18,18 +16,15 @@ on:
 
 # Jobs que se ejecutarán
 jobs:
-  # Nombre del job
   saludar:
-    # Runner donde se ejecutará (máquina virtual con Ubuntu)
     runs-on: ubuntu-latest
 
-    # Pasos que se ejecutarán en orden
     steps:
       # Paso 1: Hacer checkout del código
       - name: Checkout del repositorio
         uses: actions/checkout@v4
 
-      # Paso 2: Ejecutar comando de shell
+      # Opción 3: Múltiples Mensajes
       - name: Primer mensaje
         run: echo "🚀 Iniciando el workflow"
 
@@ -39,7 +34,7 @@ jobs:
       - name: Mensaje de despedida
         run: echo "✅ Workflow completado exitosamente"
 
-      # Opción 1: Variables de entorno
+      # Opción 1: Variables de Entorno
       - name: Imprimir mensaje personalizado
         env:
           MENSAJE: "¡Hola DevOps!"
@@ -71,8 +66,8 @@ jobs:
       # Nivel 2: Crear un Archivo
       - name: Crear archivo de saludo
         run: |
-          echo '¡Hola DevOps!' > saludo.txt
-          echo 'Archivo creado exitosamente'
+          echo "¡Hola DevOps!" > saludo.txt
+          echo "Archivo creado exitosamente"
 
       - name: Mostrar contenido del archivo
         run: cat saludo.txt
